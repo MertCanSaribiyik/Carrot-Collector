@@ -1830,7 +1830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ec9df5fdac3404994272c13a10e197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 8
   joystick: {fileID: 1546970377}
 --- !u!50 &1434093414
 Rigidbody2D:
@@ -1922,6 +1922,9 @@ MonoBehaviour:
   left: {fileID: 1075521188}
   right: {fileID: 998039575}
   scoreTxt: {fileID: 535861735}
+  gameManager: {fileID: 579457837}
+  extraTime: 3
+  floatingTimeText: {fileID: 6705747264929230973, guid: c9163ae24be32784497f67d64603c448, type: 3}
   eatClip: {fileID: 8300000, guid: a164bea6f71437a44a17226dfb415ed0, type: 3}
 --- !u!1 &1471132294
 GameObject:

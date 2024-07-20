@@ -9,6 +9,10 @@ public class Collectable : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreTxt;
     public int Score { get; private set; }
 
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private int extraTime = 3;
+    [SerializeField] private GameObject floatingTimeText;
+
     [SerializeField] private AudioClip eatClip;
 
     private void Awake() {
@@ -20,9 +24,7 @@ public class Collectable : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Collectable")) {
-            AudioManager.Instance.PlaySoundEffect(eatClip);
-            SetRandomPos(collision.transform);
-            scoreTxt.text = (++Score).ToString();
+            Collect(collision.gameObject);
         }
     }
 
@@ -31,5 +33,18 @@ public class Collectable : MonoBehaviour
         float xPos = Random.Range(left.position.x + 1f, right.position.x - 1f);
 
         obj.position = new Vector3(xPos, yPos, 0f);
+    }
+
+    private void Collect(GameObject obj) {
+        AudioManager.Instance.PlaySoundEffect(eatClip);
+
+        SetRandomPos(obj.transform);
+        scoreTxt.text = (++Score).ToString();
+
+        GameObject floatingText = Instantiate(floatingTimeText, transform.position, Quaternion.identity);
+        floatingText.transform.SetParent(transform);
+        gameManager.Time += extraTime;
+
+        gameManager.SetTimeTxt(gameManager.Time);
     }
 }

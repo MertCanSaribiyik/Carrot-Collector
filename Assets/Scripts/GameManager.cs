@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timeTxt;
     [SerializeField] private Configuration config;
-    private int time;
+    public int Time { get; set; }
     private float counter;
 
     [SerializeField] private Collectable playerCollectable;
@@ -20,11 +20,11 @@ public class GameManager : MonoBehaviour
     }
 
     private void Update() {
-        if(Time.time >= counter && !gameFinished) {
-            timeTxt.text = $"Time : {--time}s";
-            counter = Time.time + 1;
+        if(UnityEngine.Time.time >= counter && !gameFinished) {
+            SetTimeTxt(--Time);
+            counter = UnityEngine.Time.time + 1;
 
-            if(time == 0) {
+            if(Time == 0) {
                 GameOver();
                 Invoke("PreviousScene", 3f);
             }
@@ -32,9 +32,9 @@ public class GameManager : MonoBehaviour
     }
 
     private void SetGame() {
-        time = config.time;
-        counter = Time.time + 1;
-        timeTxt.text = $"Time : {time}s";
+        Time = config.time;
+        counter = UnityEngine.Time.time + 1;
+        SetTimeTxt(Time);
 
         pauseMenu.SetActive(false);
         gameFinished = false;
@@ -54,18 +54,22 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
+    public void SetTimeTxt(int time) {
+        timeTxt.text = $"Time : {time}s";
+    }
+
     public void PauseButton() {
-        Time.timeScale = 0f;
+        UnityEngine.Time.timeScale = 0f;
         pauseMenu.SetActive(true);
     }
 
     public void ResumeButton() {
-        Time.timeScale = 1f;
+        UnityEngine.Time.timeScale = 1f;
         pauseMenu.SetActive(false);
     }
 
     public void BackButton() {
-        Time.timeScale = 1f;
+        UnityEngine.Time.timeScale = 1f;
         PreviousScene();
     }
 
